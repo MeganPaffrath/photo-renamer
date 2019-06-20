@@ -27,7 +27,7 @@ def renameFilesFromRename():
 		fileName = file # get individual file name
 		fileType = fileName.split(".")[-1] # get file type for each photo
 
-		if (fileType == "jpg"):
+		if (fileType == "jpg" or fileType == "JPG"):
 			photoPath = "Rename/" + file
 			date = getDateAndTime(photoPath)
 			print ("\t" + fileName + " - a " + fileType + " file -  was created: " + date )
