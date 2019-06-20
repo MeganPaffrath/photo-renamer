@@ -9,27 +9,30 @@
 # Open Rename Folder
 import os, sys
 from PIL import Image
+from shutil import copyfile # copy images to new dest.
+	# copyfile(src, dst)
 
 
 def getDateAndTime(filePath):
     return Image.open(filePath)._getexif()[36867]
 
-def moveRenameablesToDone():
-	return "not done"
+def moveRenameablesToDone(originalFile, newName):
+	oldDestination = "Rename/" + originalFile
+	newDestination = "Done/" + newName
+	copyfile(oldDestination, newDestination)
 
-def renameFilesInDirectory(directoryOfPathToRename):
-	directoryFiles = os.listdir(directoryOfPathToRename)
+def renameFilesFromRename():
+	directoryFiles = os.listdir("Rename")
 	for file in directoryFiles: # For each file in Rename folder:
 		fileName = file # get individual file name
 		fileType = fileName.split(".")[-1] # get file type for each photo
-		if (fileType == "txt"):
-			print (fileName + " - a " + fileType + " file")
 
-		elif (fileType == "jpg"):
-			photoPath = directoryOfPathToRename + "/" + file
+		if (fileType == "jpg"):
+			photoPath = "Rename/" + file
 			date = getDateAndTime(photoPath)
 			print ("\t" + fileName + " - a " + fileType + " file -  was created: " + date )
 			newName = date[0:4] + "_" + date[5:7] + "_" + date[8:10] + "_at_" + date[11:13] + "_" + date[14:16] + "_" + date[17:19] + "." + fileType
 			print ("\t\tYour new file name is " + newName)
+			moveRenameablesToDone(file, newName)
 
-renameFilesInDirectory("Rename")
+renameFilesFromRename()
