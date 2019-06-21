@@ -60,10 +60,11 @@ def renamePhotos():
 				newName = newFileName(utcTime, file)
 			except KeyError:
 				newName = "error" + file
+			except TypeError:
+				newName = "error" + file
 			moveRenameablesToDone(file, newName)
 			renamedAndMovedMSG(file, newName)
 
-			
 
 def renameVideos():
 	for longFile, date in get_crtimes_in_dir("./Rename", raise_on_error=True, as_epoch=True):
@@ -78,26 +79,8 @@ def renameVideos():
 
 def renameFilesFromRename():
 	renamePhotos()
-	print("//////////////////////////////////////////////////////////////////////////////////////////////////////")
 	renameVideos()
-	print("//////////////////////////////////////////////////////////////////////////////////////////////////////")
 	unkFileTypeCopy()
 
-		# elif (fileType == "m4v"):
-		# 	videoPath = "Rename/" + file
-		# 	date = "none"
-		# 	# date = datetime.datetime.fromtimestamp(os.path.getcrtime(videoPath))
-		# 	# for file, date in get_crtimes_in_dir(".", raise_on_error=True, as_epoch=False):
-		# 	# 	print(file + "at" + str(date))			
-		# 	for file, date in get_crtimes_in_dir("./Rename", raise_on_error=True, as_epoch=True):
-		# 		print(file + "at" + str(date))
-
-
-			# date = get_crtimes_in_dir(videoPath)
-			# print (date)
-			# print ("\t" + fileName + " - a " + fileType + " file -  was created: " + date )
-			# newName = date[0:4] + "_" + date[5:7] + "_" + date[8:10] + "_at_" + date[11:13] + "_" + date[14:16] + "_" + date[17:19] + "." + fileType
-			# print ("\t\tYour new file name is " + newName)
-			# moveRenameablesToDone(file, newName)
 
 renameFilesFromRename()
